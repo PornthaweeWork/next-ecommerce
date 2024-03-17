@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import SelectOption from "@/components/SelectOption";
+import Radio from "@/components/base/Radio";
 
 export default function ProductPage() {
-  const [isShowSort, setIsShowSort] = useState(false);
   const [optionSelected, setOptionSelected] = useState("ASC");
   const optionSort: { value: string; label: string }[] = [
     {
@@ -19,9 +20,13 @@ export default function ProductPage() {
     },
   ];
 
+  const handleChangeOption = (value: string) => {
+    setOptionSelected(value);
+  }
+
   useEffect(() => {
-    console.log("isShowSort :>> ", isShowSort);
-  }, [isShowSort]);
+    console.log("optionSelected :>> ", optionSelected);
+  }, [optionSelected]);
 
   return (
     <div className="my-[100px] flex">
@@ -31,31 +36,18 @@ export default function ProductPage() {
           <span className="self-start text-2xl font-bold">
             Woman’s Clothing
           </span>
-          <div className="relative flex w-fit flex-col items-end justify-center">
-            <button
-              className="border p-3"
-              onClick={(): void => setIsShowSort(!isShowSort)}
-            >
-              Sort by
-            </button>
-            {isShowSort && (
-              <div className="border p-5">
-                {optionSort.map((option, index) => (
-                  <div
-                    key={index}
-                    className={`${index < optionSort.length - 1 && "mb-5"} flex items-center`}
-                  >
-                    <input
-                      type="radio"
-                      value={option.value}
-                      className="mr-4 size-6 checked:bg-[#C1CD00]"
-                    />
-                    <span>{option.label}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <SelectOption titleButton="Sort By">
+            {optionSort.map((option, index) => (
+              <Radio
+                key={index}
+                value={option.value}
+                label={option.label}
+                className={`${index < optionSort.length - 1 && "mb-5"}`}
+                checked={optionSelected === option.value}
+                onChange={handleChangeOption}
+              />
+            ))}
+          </SelectOption>
         </div>
       </div>
     </div>
