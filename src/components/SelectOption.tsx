@@ -17,7 +17,7 @@ export default function SelectOption({titleButton, children}: Props) {
         {titleButton}
       </button>
       {isShowSort && (
-        <div className="border p-5">
+        <div className="absolute top-[54px] border p-5">
           {children}
         </div>
       )}

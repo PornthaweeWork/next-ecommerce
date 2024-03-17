@@ -19,7 +19,7 @@ export default function Radio({className, value, label, checked, onChange}: Prop
 
   return (
     <label
-      className={`${className} flex items-center`}
+      className={`${className} flex items-center text-nowrap`}
       onClick={() => handleSelect(value)}
     >
       <input
