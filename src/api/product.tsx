@@ -1,13 +1,18 @@
 import axios from "axios";
 
-interface ProductListModel {
+export interface CategoriesModel {
   id: string;
   name: string;
-  price: number;
-
+  permalink: string;
+  parentId: string;
 }
 
-const getData = async (): Promise<ProductListModel[]> => {
-  const response = await axios.get<ProductListModel[]>('https://aws.amazon.com/what-is/api/');
-  return response.data;
-};
+
+export default async function getCategories() {
+  try {
+    const response = await axios.get('https://api.storefront.wdb.skooldio.dev/categories');
+    return response.data;
+  } catch (error) {
+    console.error('getCategories', error);
+  }
+}

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface AccordionProps {
-  id: number;
+  id: string;
   title: string;
   contents: { value: string; label: string }[];
-  defaultSelected?: string;
-  defaultExpand?: number;
-  onChange: (event: string) => void;
+  defaultSelected: string;
+  defaultExpand: string;
+  onChange: (parentId: string, contentId: string) => void;
 }
 
 export default function Accordion({
@@ -17,10 +17,15 @@ export default function Accordion({
   defaultExpand,
   onChange,
 }: AccordionProps) {
-  const [isExpand, setIsExpand] = useState(defaultExpand === id);
+  const [isExpand, setIsExpand] = useState(defaultExpand == id);
   const [expandIndex, setExpandIndex] = useState(defaultExpand);
 
-  const handleExpand = (id: number) => {
+  useEffect(() => {
+    setIsExpand(defaultExpand == id);
+    setExpandIndex(defaultExpand);
+  }, [defaultExpand, id]);
+
+  const handleExpand = (id: string) => {
     setIsExpand(!isExpand);
     setExpandIndex(id);
   };
@@ -54,7 +59,7 @@ export default function Accordion({
           <button
             key={index}
             className={`${defaultSelected === content.value && "bg-[#DEF81C]"} mb-2 w-full p-[10px] text-left text-sm checked:bg-[#DEF81C] hover:bg-[#F2F2F2]`}
-            onClick={() => onChange(content.value)}
+            onClick={() => onChange(id,content.value)}
           >
             <p>{content.label}</p>
           </button>
